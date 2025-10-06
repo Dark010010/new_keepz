@@ -353,5 +353,19 @@ if __name__ == "__main__":
     # Create and run the Flask application when executed directly. Running in
     # debug mode is convenient for development but should be disabled in
     # production.
+    # Create a global ``app`` variable so that WSGI servers like Gunicorn can
+    # locate the Flask application object when importing this module. Without
+    # a top‑level name called ``app``, commands such as ``gunicorn app:app``
+    # will fail because ``app`` is undefined. We still create ``application``
+    # for backwards compatibility and to avoid breaking code that might
+    # explicitly import ``application``. Both names reference the same
+    # underlying Flask instance.
     application = create_flask_app()
-    application.run(host="0.0.0.0", port=8000, debug=True)
+    app = application
+
+    # When running this file directly (``python app.py``), start a development
+    # server on the port specified by the PORT environment variable or fall
+    # back to 8000. In production (e.g. on Render or with Gunicorn) this
+    # block is ignored.
+    port = int(os.environ.get("PORT", 8000))
+    app.run(host="0.0.0.0", port=port, debug=True)
