@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Result</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 40px auto; }
+        h1 { color: #333; }
+        a { word-break: break-all; }
+        .error { color: #c00; }
+        .success { color: #070; }
+    </style>
+</head>
+<body>
+    <h1>Order Created</h1>
+    {% if result.error %}
+        <p class="error">Error: {{ result.error }}</p>
+    {% else %}
+        <p><strong>Integrator Order ID:</strong> {{ order_id }}</p>
+        {% if result.urlForQR %}
+            <p class="success">Use the link below to complete your payment. You can open it directly or scan the QR code in your Keepz mobile app.</p>
+            <p><a href="{{ result.urlForQR }}" target="_blank">{{ result.urlForQR }}</a></p>
+        {% else %}
+            <p class="success">Your order has been created. Please complete the payment via the Keepz app using the order reference above.</p>
+            <p>Response details:</p>
+            <pre>{{ result | tojson }}</pre>
+        {% endif %}
+    {% endif %}
+</body>
+</html>

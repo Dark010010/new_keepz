@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keepz Checkout</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 40px auto; }
+        h1 { color: #333; }
+        label { display: block; margin-top: 1em; }
+        input[type="number"], input[type="text"] { width: 100%; padding: 8px; box-sizing: border-box; }
+        button { margin-top: 1.5em; padding: 10px 20px; font-size: 16px; cursor: pointer; }
+        .note { font-size: 0.9em; color: #666; margin-top: 1em; }
+    </style>
+</head>
+<body>
+    <h1>Purchase with Keepz</h1>
+    <form action="/create_order" method="post">
+        <label>
+            Amount (₾):
+            <input type="number" name="amount" step="0.01" min="0.01" required>
+        </label>
+        <label>
+            Contact (email or phone):
+            <input type="text" name="contact" required>
+        </label>
+        <button type="submit">Pay with Keepz</button>
+    </form>
+    <div class="note">
+        <p>Your payment information will be sent securely to Keepz. After creating the order you will be redirected to a page containing a payment link or QR code.</p>
+    </div>
+</body>
+</html>
